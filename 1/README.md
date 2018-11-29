@@ -203,6 +203,8 @@ stream.  No other special  techniques are required with Turbo 4.0
 ... each successive call to  GetChar will read the next character
 in the stream.
 
+`cradle.pas`:
+
 ```pascal
 {--------------------------------------------------------------}
 program Cradle;
@@ -234,7 +236,6 @@ begin
    WriteLn(^G, 'Error: ', s, '.');
 end;
 
-
 {--------------------------------------------------------------}
 { Report Error and Halt }
 
@@ -243,7 +244,6 @@ begin
    Error(s);
    Halt;
 end;
-
 
 {--------------------------------------------------------------}
 { Report What Was Expected }
@@ -262,7 +262,6 @@ begin
    else Expected('''' + x + '''');
 end;
 
-
 {--------------------------------------------------------------}
 { Recognize an Alpha Character }
 
@@ -271,7 +270,6 @@ begin
    IsAlpha := upcase(c) in ['A'..'Z'];
 end;
                               
-
 {--------------------------------------------------------------}
 
 { Recognize a Decimal Digit }
@@ -280,7 +278,6 @@ function IsDigit(c: char): boolean;
 begin
    IsDigit := c in ['0'..'9'];
 end;
-
 
 {--------------------------------------------------------------}
 { Get an Identifier }
@@ -292,7 +289,6 @@ begin
    GetChar;
 end;
 
-
 {--------------------------------------------------------------}
 { Get a Number }
 
@@ -303,7 +299,6 @@ begin
    GetChar;
 end;
 
-
 {--------------------------------------------------------------}
 { Output a String with Tab }
 
@@ -311,9 +306,6 @@ procedure Emit(s: string);
 begin
    Write(TAB, s);
 end;
-
-
-
 
 {--------------------------------------------------------------}
 { Output a String with Tab and CRLF }
@@ -332,7 +324,6 @@ begin
    GetChar;
 end;
 
-
 {--------------------------------------------------------------}
 { Main Program }
 
@@ -340,6 +331,122 @@ begin
    Init;
 end.
 {--------------------------------------------------------------}
+```
+
+`cradle.h`:
+
+```c
+#ifndef _CRADLE_H
+#define _CRADLE_H
+
+#define UPCASE(C) (~(1<<5) & (C))
+#define MAX_BUF 100
+
+static char tmp[MAX_BUF];
+
+char Look;
+
+void GetChar();
+
+void Error(char *s);
+void Abort(char *s);
+void Expected(char *s);
+void Match(char x);
+
+int IsAlpha(char c);
+int IsDigit(char c);
+
+char GetName();
+char GetNum();
+
+void Emit(char *s);
+void EmitLn(char *s);
+
+void Init();
+
+#endif
+```
+
+`cradle.c`:
+
+```c
+#include "cradle.h"
+#include <stdio.h>
+#include <stdlib.h>
+
+void GetChar() {
+    Look = getchar();
+}
+
+void Error(char *s) {
+    printf("\nError: %s.", s);
+}
+
+void Abort(char *s) {
+    Error(s);
+    exit(1);
+}
+
+void Expected(char *s) {
+    sprintf(tmp, "%s Expected", s);
+    Abort(tmp);
+}
+
+void Match(char x) {
+    if(Look == x) {
+        GetChar();
+    } else {
+        sprintf(tmp, "' %c ' ",  x);
+        Expected(tmp);
+    }
+}
+
+int IsAlpha(char c) {
+    return (UPCASE(c) >= 'A') && (UPCASE(c) <= 'Z');
+} 
+
+int IsDigit(char c) {
+    return (c >= '0') && (c <= '9');
+}
+
+char GetName() {
+    char c = Look;
+
+    if( !IsAlpha(Look)) {
+        sprintf(tmp, "Name");
+        Expected(tmp);
+    }
+
+    GetChar();
+
+    return UPCASE(c);
+}
+
+char GetNum() {
+    char c = Look;
+
+    if( !IsDigit(Look)) {
+        sprintf(tmp, "Integer");
+        Expected(tmp);
+    }
+
+    GetChar();
+
+    return c;
+}
+
+void Emit(char *s) {
+    printf("\t%s", s);
+}
+
+void EmitLn(char *s) {
+    Emit(s);
+    printf("\n");
+}
+
+void Init() {
+    GetChar();
+}
 ```
 
 That's it for this introduction.  Copy the code above into TP and
