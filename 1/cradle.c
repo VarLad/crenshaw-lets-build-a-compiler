@@ -3,33 +3,28 @@
 #include <stdlib.h>
 
 
-void GetChar() 
-{
+void GetChar() {
     Look = getchar();
 }
 
 
-void Error(char *s)
-{
+void Error(char *s) {
     printf("\nError: %s.", s);
 }
 
-void Abort(char *s)
-{
+void Abort(char *s) {
     Error(s);
     exit(1);
 }
 
 
-void Expected(char *s)
-{
+void Expected(char *s) {
     sprintf(tmp, "%s Expected", s);
     Abort(tmp);
 }
 
 
-void Match(char x)
-{
+void Match(char x) {
     if(Look == x) {
         GetChar();
     } else {
@@ -39,19 +34,16 @@ void Match(char x)
 }
 
 
-int IsAlpha(char c)
-{
+int IsAlpha(char c) {
     return (UPCASE(c) >= 'A') && (UPCASE(c) <= 'Z');
 } 
 
-int IsDigit(char c)
-{
+int IsDigit(char c) {
     return (c >= '0') && (c <= '9');
 }
 
 
-char GetName()
-{
+char GetName() {
     char c = Look;
 
     if( !IsAlpha(Look)) {
@@ -65,8 +57,7 @@ char GetName()
 }
 
 
-char GetNum()
-{
+char GetNum() {
     char c = Look;
 
     if( !IsDigit(Look)) {
@@ -79,19 +70,15 @@ char GetNum()
     return c;
 }
 
-void Emit(char *s)
-{
+void Emit(char *s) {
     printf("\t%s", s);
 }
 
-void EmitLn(char *s)
-{
+void EmitLn(char *s) {
     Emit(s);
     printf("\n");
 }
 
-void Init()
-{
+void Init() {
     GetChar();
 }
-
