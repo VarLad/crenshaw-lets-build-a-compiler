@@ -194,8 +194,8 @@ calls to them as we  need to.  Make a copy of the cradle and save
 it, because we'll be using it more than once.
 
 There are many different ways to organize the scanning activities
-of  a  parser.   In Unix systems, authors tend to  use  getc  and
-ungetc.  I've had very good luck with the  approach  shown  here,
+of  a  parser.   In [Unix](https://en.wikipedia.org/wiki/Unix) systems, authors tend to  use [getc](https://linux.die.net/man/3/getc) and
+[ungetc](https://linux.die.net/man/3/ungetc).  I've had very good luck with the  approach  shown  here,
 which is to use  a  single, global, lookahead character.  Part of
 the initialization procedure  (the  only part, so far!) serves to
 "prime  the  pump"  by reading the first character from the input
