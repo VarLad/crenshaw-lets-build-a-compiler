@@ -1,40 +1,10 @@
+# LET'S BUILD A COMPILER!
 
+By Jack W. Crenshaw, Ph.D.
 
+24 July 1988
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            LET'S BUILD A COMPILER!
-
-                                       By
-
-                            Jack W. Crenshaw, Ph.D.
-
-                                  24 July 1988
-
-
-                              Part I: INTRODUCTION
+## Part I: INTRODUCTION
 
 
 *****************************************************************
@@ -46,7 +16,7 @@
 *****************************************************************
 
 
-INTRODUCTION
+### INTRODUCTION
 
 
 This series of articles is a tutorial on the theory  and practice
@@ -104,29 +74,21 @@ you can consider yourself finished.  Please be patient.
 The average text on  compiler  theory covers a lot of ground that
 we won't be covering here.  The typical sequence is:
 
- o An introductory chapter describing what a compiler is.
+- An introductory chapter describing what a compiler is.
 
- o A chapter or two on syntax equations, using Backus-Naur Form
-   (BNF).
+- A chapter or two on syntax equations, using Backus-Naur Form (BNF).
 
- o A chapter or two on lexical scanning, with emphasis on
-   deterministic and non-deterministic finite automata.
+- A chapter or two on lexical scanning, with emphasis on deterministic and non-deterministic finite automata.
 
- o Several chapters on parsing theory, beginning with top-down
-   recursive descent, and ending with LALR parsers.
+- Several chapters on parsing theory, beginning with top-down recursive descent, and ending with LALR parsers.
 
- o A chapter on intermediate languages, with emphasis on P-code
-   and similar reverse polish representations.
+- A chapter on intermediate languages, with emphasis on P-code and similar reverse polish representations.
 
- o Many chapters on alternative ways to handle subroutines and
-   parameter passing, type declarations, and such.
+- Many chapters on alternative ways to handle subroutines and parameter passing, type declarations, and such.
 
- o A chapter toward the end on code generation, usually for some
-   imaginary CPU with a simple instruction set.  Most readers
-   (and in fact, most college classes) never make it this far.
+- A chapter toward the end on code generation, usually for some imaginary CPU with a simple instruction set.  Most readers (and in fact, most college classes) never make it this far.
 
- o A final chapter or two on optimization. This chapter often
-   goes unread, too.
+- A final chapter or two on optimization. This chapter often goes unread, too.
 
 
 I'll  be taking a much different approach in  this  series.    To
@@ -217,7 +179,7 @@ the '86 language better than I do will offer  us  the  equivalent
 object code fragments as we need them.
 
 
-THE CRADLE
+### THE CRADLE
 
 Every program needs some boiler  plate  ...  I/O  routines, error
 message routines, etc.   The  programs we develop here will be no
@@ -241,7 +203,7 @@ stream.  No other special  techniques are required with Turbo 4.0
 ... each successive call to  GetChar will read the next character
 in the stream.
 
-
+```pascal
 {--------------------------------------------------------------}
 program Cradle;
 
@@ -378,7 +340,7 @@ begin
    Init;
 end.
 {--------------------------------------------------------------}
-
+```
 
 That's it for this introduction.  Copy the code above into TP and
 compile it.  Make sure that it compiles and runs  correctly. Then
@@ -392,7 +354,3 @@ proceed to the first lesson, which is on expression parsing.
 *   Copyright (C) 1988 Jack W. Crenshaw. All rights reserved.   *
 *                                                               *
 *****************************************************************
-
-
-
-
