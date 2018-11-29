@@ -54,7 +54,7 @@ you to get one.  After  all,  it's an excellent product, good for
 many other uses!
 
 Some articles on compilers show you examples, or show you  (as in
-the case of Small-C) a finished product, which you can  then copy
+the case of [Small-C](https://en.wikipedia.org/wiki/Small-C)) a finished product, which you can  then copy
 and  use without a whole lot of understanding of how it works.  I
 hope to do much more  than  that.    I  hope to teach you HOW the
 things get done,  so that you can go off on your own and not only
@@ -76,15 +76,15 @@ we won't be covering here.  The typical sequence is:
 
 - An introductory chapter describing what a compiler is.
 
-- A chapter or two on syntax equations, using Backus-Naur Form (BNF).
+- A chapter or two on syntax equations, using [Backus-Naur Form (BNF)](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form).
 
-- A chapter or two on lexical scanning, with emphasis on deterministic and non-deterministic finite automata.
+- A chapter or two on [lexical scanning](https://en.wikipedia.org/wiki/Lexical_analysis), with emphasis on [deterministic](https://en.wikipedia.org/wiki/Deterministic_finite_automaton) and [non-deterministic finite automata](https://en.wikipedia.org/wiki/Nondeterministic_finite_automaton).
 
-- Several chapters on parsing theory, beginning with top-down recursive descent, and ending with LALR parsers.
+- Several chapters on [parsing theory](https://en.wikipedia.org/wiki/Parsing), beginning with top-down [recursive descent](https://en.wikipedia.org/wiki/Recursive_descent_parser), and ending with [LALR parsers](https://en.wikipedia.org/wiki/LALR_parser).
 
-- A chapter on intermediate languages, with emphasis on P-code and similar reverse polish representations.
+- A chapter on [intermediate languages](https://en.wikipedia.org/wiki/Intermediate_representation), with emphasis on [P-code](https://en.wikipedia.org/wiki/P-code_machine) and similar [reverse polish](https://en.wikipedia.org/wiki/Reverse_Polish_notation) representations.
 
-- Many chapters on alternative ways to handle subroutines and parameter passing, type declarations, and such.
+- Many chapters on alternative ways to handle subroutines and [parameter passing](http://wiki.c2.com/?ParameterPassing), type declarations, and such.
 
 - A chapter toward the end on code generation, usually for some imaginary CPU with a simple instruction set.  Most readers (and in fact, most college classes) never make it this far.
 
