@@ -6,7 +6,7 @@ By Jack W. Crenshaw, Ph.D.
 
 ## Part I: INTRODUCTION
 
-
+```
 *****************************************************************
 *                                                               *
 *                        COPYRIGHT NOTICE                       *
@@ -14,7 +14,7 @@ By Jack W. Crenshaw, Ph.D.
 *   Copyright (C) 1988 Jack W. Crenshaw. All rights reserved.   *
 *                                                               *
 *****************************************************************
-
+```
 
 ### INTRODUCTION
 
@@ -346,7 +346,7 @@ That's it for this introduction.  Copy the code above into TP and
 compile it.  Make sure that it compiles and runs  correctly. Then
 proceed to the first lesson, which is on expression parsing.
 
-
+```
 *****************************************************************
 *                                                               *
 *                        COPYRIGHT NOTICE                       *
@@ -354,3 +354,4 @@ proceed to the first lesson, which is on expression parsing.
 *   Copyright (C) 1988 Jack W. Crenshaw. All rights reserved.   *
 *                                                               *
 *****************************************************************
+```
