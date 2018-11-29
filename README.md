@@ -1,6 +1,6 @@
-NOTE: This is a fork of [lotabout/Let-s-build-a-compiler](https://github.com/lotabout/Let-s-build-a-compiler), reformatted as markdown for easier reading on github.com.
+*NOTE: This is a fork of [lotabout/Let-s-build-a-compiler](https://github.com/lotabout/Let-s-build-a-compiler), reformatted as markdown for easier reading on github.com.*
 
-lotabout's README.md follows:
+*lotabout's README.md follows:*
 
 ----
 
