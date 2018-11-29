@@ -1,3 +1,9 @@
+NOTE: This is a fork of [lotabout/Let-s-build-a-compiler](https://github.com/lotabout/Let-s-build-a-compiler), reformatted as markdown for easier reading on github.com.
+
+lotabout's README.md follows:
+
+----
+
 # Information
 A C version of the "Let's Build a Compiler" by Jack Crenshaw 
 http://compilers.iecc.com/crenshaw/
