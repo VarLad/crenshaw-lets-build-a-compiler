@@ -1,44 +1,12 @@
+# LET'S BUILD A COMPILER!
 
+By Jack W. Crenshaw, Ph.D.
 
+24 July 1988
 
+## Part II: EXPRESSION PARSING
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                     LET'S BUILD A COMPILER!
-
-                                By
-
-                     Jack W. Crenshaw, Ph.D.
-
-                           24 July 1988
-
-
-                   Part II: EXPRESSION PARSING
-
-
+```
 *****************************************************************
 *                                                               *
 *                        COPYRIGHT NOTICE                       *
@@ -46,9 +14,9 @@
 *   Copyright (C) 1988 Jack W. Crenshaw. All rights reserved.   *
 *                                                               *
 *****************************************************************
+```
 
-
-GETTING STARTED
+### GETTING STARTED
 
 If you've read the introduction document to this series, you will
 already know what  we're  about.    You will also have copied the
@@ -62,7 +30,7 @@ output is a series of assembler-language statements  that perform
 the desired actions.    For purposes of definition, an expression
 is the right-hand side of an equation, as in
 
-               x = 2*y + 3/(4*z)
+`x = 2*y + 3/(4*z)`
 
 In the early going, I'll be taking things in _VERY_  small steps.
 That's  so  that  the beginners among you won't get totally lost.
@@ -70,7 +38,7 @@ There are also  some  very  good  lessons to be learned early on,
 that will serve us well later.  For the more experienced readers:
 bear with me.  We'll get rolling soon enough.
 
-SINGLE DIGITS
+### SINGLE DIGITS
 
 In keeping with the whole theme of this series (KISS, remember?),
 let's start with the absolutely most simple case we can think of.
@@ -80,7 +48,7 @@ Before starting to code, make sure you have a  baseline  copy  of
 the  "cradle" that I gave last time.  We'll be using it again for
 other experiments.  Then add this code:
 
-
+```pascal
 {---------------------------------------------------------------}
 { Parse and Translate a Math Expression }
 
@@ -89,19 +57,19 @@ begin
    EmitLn('MOVE #' + GetNum + ',D0')
 end;
 {---------------------------------------------------------------}
-
+```
 
 And add the  line  "Expression;"  to  the main program so that it
 reads:
                               
-
+```pascal
 {---------------------------------------------------------------}
 begin
    Init;
    Expression;
 end.
 {---------------------------------------------------------------}
-
+```
 
 Now  run  the  program. Try any single-digit number as input. You
 should get a single line of assembler-language output.    Now try
@@ -135,16 +103,22 @@ chosen the  68000  register  DO.    I  could have made some other
 choices, but this one makes sense.
 
 
-BINARY EXPRESSIONS
+### BINARY EXPRESSIONS
 
 Now that we have that under our belt,  let's  branch  out  a bit.
 Admittedly, an "expression" consisting of only  one  character is
 not going to meet our needs for long, so let's see what we can do
 to extend it. Suppose we want to handle expressions of the form:
 
-                         1+2
-     or                  4-3
-     or, in general, <term> +/- <term>
+`1+2`
+
+or
+
+`4-3`
+
+or, in general,
+
+`<term> +/- <term>`
 
 (That's a bit of Backus-Naur Form, or BNF.)
                               
@@ -160,9 +134,7 @@ OK, basically what we want to  do  is have procedure Term do what
 Expression was doing before.  So just RENAME procedure Expression
 as Term, and enter the following new version of Expression:
 
-
-
-
+```pascal
 {---------------------------------------------------------------}
 { Parse and Translate an Expression }
 
@@ -177,11 +149,11 @@ begin
    end;
 end;
 {--------------------------------------------------------------}
-
+```
 
 Next, just above Expression enter these two procedures:
 
-
+```pascal
 {--------------------------------------------------------------}
 { Recognize and Translate an Add }
 
@@ -191,8 +163,9 @@ begin
    Term;
    EmitLn('ADD D1,D0');
 end;
+```
 
-
+```pascal
 {-------------------------------------------------------------}
 { Recognize and Translate a Subtract }
 
@@ -203,15 +176,15 @@ begin
    EmitLn('SUB D1,D0');
 end;
 {-------------------------------------------------------------}
-                              
+```      
 
 When you're finished with that,  the order of the routines should
 be:
 
- o Term (The OLD Expression)
- o Add
- o Subtract
- o Expression
+- Term (The OLD Expression)
+- Add
+- Subtract
+- Expression
 
 Now run the program.  Try any combination you can think of of two
 single digits,  separated  by  a  '+' or a '-'.  You should get a
@@ -223,8 +196,10 @@ Take  a  look  at the object  code  generated.    There  are  two
 observations we can make.  First, the code generated is  NOT what
 we would write ourselves.  The sequence
 
-        MOVE #n,D0
-        MOVE D0,D1
+```asm
+MOVE #n,D0
+MOVE D0,D1
+```
 
 is inefficient.  If we were  writing  this code by hand, we would
 probably just load the data directly to D1.
@@ -254,7 +229,7 @@ the wrong way, so we end up with the wrong  sign  for the result.
 So let's fix up procedure Subtract with a  sign-changer,  so that
 it reads
 
-
+```
 {-------------------------------------------------------------}
 { Recognize and Translate a Subtract }
 
@@ -266,7 +241,7 @@ begin
    EmitLn('NEG D0');
 end;
 {-------------------------------------------------------------}
-
+```
 
 Now  our  code  is even less efficient, but at least it gives the
 right answer!  Unfortunately, the  rules that give the meaning of
@@ -290,19 +265,20 @@ start to take the shape of a real parser.
 
 
 
-GENERAL EXPRESSIONS
+### GENERAL EXPRESSIONS
 
 In the  REAL  world,  an  expression  can  consist of one or more
 terms, separated  by  "addops"  ('+'  or  '-').   In BNF, this is
 written
 
-          <expression> ::= <term> [<addop> <term>]*
-
+```bnf
+<expression> ::= <term> [<addop> <term>]*
+```
 
 We  can  accomodate  this definition of an  expression  with  the
 addition of a simple loop to procedure Expression:
 
-
+```pascal
 {---------------------------------------------------------------}
 { Parse and Translate an Expression }
 
@@ -319,7 +295,7 @@ begin
    end;
 end;
 {--------------------------------------------------------------}
-
+```
 
 NOW we're getting somewhere!   This version handles any number of
 terms, and it only cost us two extra lines of code.  As we go on,
@@ -343,7 +319,7 @@ experiments.  In a production version, the two  outputs  would be
 separated ... one to the output file, and one to the screen.
 
 
-USING THE STACK
+### USING THE STACK
 
 At  this  point  I'm going to  violate  my  rule  that  we  don't
 introduce any complexity until  it's  absolutely  necessary, long
@@ -354,7 +330,7 @@ now,  because  as  long as we deal with only the "addops" '+' and
 '-', any new term can be added in as soon as it is found.  But in
 general that isn't true.  Consider, for example, the expression
 
-               1+(2-(3+(4-5)))
+`1+(2-(3+(4-5)))`
                               
 If we put the '1' in D1, where  do  we  put  the  '2'?    Since a
 general expression can have any degree of complexity, we're going
@@ -367,20 +343,30 @@ in D0 to  D1, let's just push it onto the stack.  For the benefit
 of  those unfamiliar with 68000 assembler  language,  a  push  is
 written
 
-               -(SP)
+`-(SP)`
 
-and a pop,     (SP)+ .
+and a pop,
+
+`(SP)+`
 
 
 So let's change the EmitLn in Expression to read:
 
-               EmitLn('MOVE D0,-(SP)');
+```pascal
+EmitLn('MOVE D0,-(SP)');
+```
 
 and the two lines in Add and Subtract to
 
-               EmitLn('ADD (SP)+,D0')
+```pascal
+EmitLn('ADD (SP)+,D0')
+```
 
-and            EmitLn('SUB (SP)+,D0'),
+and
+
+```pascal
+EmitLn('SUB (SP)+,D0'),
+```
 
 respectively.  Now try the parser again and make sure  we haven't
 broken it.
@@ -389,7 +375,7 @@ Once again, the generated code is less efficient than before, but
 it's a necessary step, as you'll see.
 
 
-MULTIPLICATION AND DIVISION
+### MULTIPLICATION AND DIVISION
 
 Now let's get down to some REALLY serious business.  As  you  all
 know,  there  are  other  math   operators   than   "addops"  ...
@@ -398,7 +384,7 @@ also  know  that  there  is  an implied operator  PRECEDENCE,  or
 hierarchy, associated with expressions, so that in  an expression
 like
 
-                    2 + 3 * 4,
+`2 + 3 * 4`
 
 we know that we're supposed to multiply FIRST, then  add.    (See
 why we needed the stack?)
@@ -413,7 +399,9 @@ we've considered for a term is that of a  single  decimal  digit.
 More generally, we  can  define  a  term as a PRODUCT of FACTORS;
 i.e.,
 
-          <term> ::= <factor>  [ <mulop> <factor ]*
+```bnf
+<term> ::= <factor>  [ <mulop> <factor ]*
+```
 
 What  is  a factor?  For now, it's what a term used to be  ...  a
 single digit.
@@ -424,7 +412,7 @@ judicious  copying and renaming.  But  to  avoid  confusion,  the
 listing below is the complete set of parsing routines.  (Note the
 way we handle the reversal of operands in Divide.)
 
-
+```pascal
 {---------------------------------------------------------------}
 { Parse and Translate a Math Factor }
 
@@ -432,7 +420,6 @@ procedure Factor;
 begin
    EmitLn('MOVE #' + GetNum + ',D0')
 end;
-
 
 {--------------------------------------------------------------}
 { Recognize and Translate a Multiply }
@@ -444,7 +431,6 @@ begin
    EmitLn('MULS (SP)+,D0');
 end;
 
-
 {-------------------------------------------------------------}
 { Recognize and Translate a Divide }
 
@@ -455,7 +441,6 @@ begin
    EmitLn('MOVE (SP)+,D1');
    EmitLn('DIVS D1,D0');
 end;
-
 
 {---------------------------------------------------------------}
 { Parse and Translate a Math Term }
@@ -473,9 +458,6 @@ begin
    end;
 end;
 
-
-
-
 {--------------------------------------------------------------}
 { Recognize and Translate an Add }
 
@@ -485,7 +467,6 @@ begin
    Term;
    EmitLn('ADD (SP)+,D0');
 end;
-
 
 {-------------------------------------------------------------}
 { Recognize and Translate a Subtract }
@@ -497,7 +478,6 @@ begin
    EmitLn('SUB (SP)+,D0');
    EmitLn('NEG D0');
 end;
-
 
 {---------------------------------------------------------------}
 { Parse and Translate an Expression }
@@ -515,7 +495,7 @@ begin
    end;
 end;
 {--------------------------------------------------------------}
-
+```
 
 Hot dog!  A NEARLY functional parser/translator, in only 55 lines
 of Pascal!  The output is starting to look really useful,  if you
@@ -523,27 +503,29 @@ continue to overlook the inefficiency,  which  I  hope  you will.
 Remember, we're not trying to produce tight code here.
 
 
-PARENTHESES
+### PARENTHESES
 
 We  can  wrap  up this part of the parser with  the  addition  of
 parentheses with  math expressions.  As you know, parentheses are
 a  mechanism to force a desired operator  precedence.    So,  for
 example, in the expression
 
-               2*(3+4) ,
+`2*(3+4)`
 
 the parentheses force the addition  before  the  multiply.   Much
 more importantly, though, parentheses  give  us  a  mechanism for
 defining expressions of any degree of complexity, as in
 
-               (1+2)/((3+4)+(5-6))
+`(1+2)/((3+4)+(5-6))`
 
 The  key  to  incorporating  parentheses  into our parser  is  to
 realize that  no matter how complicated an expression enclosed by
 parentheses may be,  to  the  rest  of  the world it looks like a
 simple factor.  That is, one of the forms for a factor is:
 
-          <factor> ::= (<expression>)
+```bnf
+<factor> ::= (<expression>)
+```
 
 This is where the recursion comes in. An expression can contain a
 factor which contains another expression which contains a factor,
@@ -552,7 +534,7 @@ etc., ad infinitum.
 Complicated or not, we can take care of this by adding just a few
 lines of Pascal to procedure Factor:
                              
-
+```pascal
 {---------------------------------------------------------------}
 { Parse and Translate a Math Factor }
 
@@ -569,7 +551,7 @@ begin
       EmitLn('MOVE #' + GetNum + ',D0');
 end;
 {--------------------------------------------------------------}
-
+```
 
 Note again how easily we can extend the parser, and how  well the
 Pascal code matches the BNF syntax.
@@ -579,19 +561,19 @@ parses  legal sentences, and flags illegal  ones  with  an  error
 message.
 
 
-UNARY MINUS
+### UNARY MINUS
 
 At  this  point,  we have a parser that can handle just about any
 expression, right?  OK, try this input sentence:
 
-                         -1
+`-1`
 
 WOOPS!  It doesn't work, does it?   Procedure  Expression expects
 everything to start with an integer, so it coughs up  the leading
 minus  sign.  You'll find that +3 won't  work  either,  nor  will
 something like
 
-                    -(3-2) .
+`-(3-2)`
 
 There  are  a  couple of ways to fix the problem.    The  easiest
 (although not necessarily the best)  way is to stick an imaginary
@@ -599,8 +581,7 @@ leading zero in  front  of  expressions  of this type, so that -3
 becomes 0-3.  We can easily patch this into our  existing version
 of Expression:
 
-
-
+```pascal
 {---------------------------------------------------------------}
 { Parse and Translate an Expression }
 
@@ -620,7 +601,7 @@ begin
    end;
 end;
 {--------------------------------------------------------------}
- 
+``` 
 
 I TOLD you that making changes  was  easy!   This time it cost us
 only  three  new lines of Pascal.   Note  the  new  reference  to
@@ -628,7 +609,7 @@ function IsAddop.  Since the test for an addop appeared  twice, I
 chose  to  embed  it in the new function.  The  form  of  IsAddop
 should be apparent from that for IsAlpha.  Here it is:
 
-
+```pascal
 {--------------------------------------------------------------}
 { Recognize an Addop }
 
@@ -637,7 +618,7 @@ begin
    IsAddop := c in ['+', '-'];
 end;
 {--------------------------------------------------------------}
-
+```
 
 OK, make these changes to the program and recompile.   You should
 also include IsAddop in your baseline copy of the cradle.   We'll
@@ -665,7 +646,7 @@ useful parser.
 
 
 
-A WORD ABOUT OPTIMIZATION
+### A WORD ABOUT OPTIMIZATION
 
 Earlier in this session, I promised to give you some hints  as to
 how we can improve the quality of the generated code.  As I said,
@@ -679,53 +660,53 @@ some extra code in the parser.
 
 There are two basic approaches we can take:
 
-  o Try to fix up the code after it's generated
+- Try to fix up the code after it's generated
 
-    This is  the concept of "peephole" optimization.  The general
-    idea it that we  know  what  combinations of instructions the
-    compiler  is  going  to generate, and we also know which ones
-    are pretty bad (such as the code for -1, above).    So all we
-    do  is  to   scan   the  produced  code,  looking  for  those
-    combinations, and replacing  them  by better ones.  It's sort
-    of   a   macro   expansion,   in   reverse,   and   a  fairly
-    straightforward  exercise  in   pattern-matching.   The  only
-    complication,  really, is that there may be  a  LOT  of  such
-    combinations to look for.  It's called  peephole optimization
-    simply because it only looks at a small group of instructions
-    at a time.  Peephole  optimization can have a dramatic effect
-    on  the  quality  of the code,  with  little  change  to  the
-    structure of the compiler  itself.   There is a price to pay,
-    though,  in  both  the  speed,   size, and complexity of  the
-    compiler.  Looking for all those combinations calls for a lot
-    of IF tests, each one of which is a source of error.  And, of
-    course, it takes time.
+This is  the concept of "peephole" optimization.  The general
+idea it that we  know  what  combinations of instructions the
+compiler  is  going  to generate, and we also know which ones
+are pretty bad (such as the code for -1, above).    So all we
+do  is  to   scan   the  produced  code,  looking  for  those
+combinations, and replacing  them  by better ones.  It's sort
+of   a   macro   expansion,   in   reverse,   and   a  fairly
+straightforward  exercise  in   pattern-matching.   The  only
+complication,  really, is that there may be  a  LOT  of  such
+combinations to look for.  It's called  peephole optimization
+simply because it only looks at a small group of instructions
+at a time.  Peephole  optimization can have a dramatic effect
+on  the  quality  of the code,  with  little  change  to  the
+structure of the compiler  itself.   There is a price to pay,
+though,  in  both  the  speed,   size, and complexity of  the
+compiler.  Looking for all those combinations calls for a lot
+of IF tests, each one of which is a source of error.  And, of
+course, it takes time.
 
-     In  the  classical  implementation  of a peephole optimizer,
-    it's done as a second pass to the compiler.  The  output code
-    is  written  to  disk,  and  then  the  optimizer  reads  and
-    processes the disk file again.  As a matter of fact,  you can
-    see that the optimizer could  even be a separate PROGRAM from
-    the compiler proper.  Since the optimizer only  looks  at the
-    code through a  small  "window"  of  instructions  (hence the
-    name), a better implementation would be to simply buffer up a
-    few lines of output, and scan the buffer after each EmitLn.
+ In  the  classical  implementation  of a peephole optimizer,
+it's done as a second pass to the compiler.  The  output code
+is  written  to  disk,  and  then  the  optimizer  reads  and
+processes the disk file again.  As a matter of fact,  you can
+see that the optimizer could  even be a separate PROGRAM from
+the compiler proper.  Since the optimizer only  looks  at the
+code through a  small  "window"  of  instructions  (hence the
+name), a better implementation would be to simply buffer up a
+few lines of output, and scan the buffer after each EmitLn.
 
-  o Try to generate better code in the first place
+- Try to generate better code in the first place
                              
-    This approach calls for us to look for  special  cases BEFORE
-    we Emit them.  As a trivial example,  we  should  be  able to
-    identify a constant zero,  and  Emit a CLR instead of a load,
-    or even do nothing at all, as in an add of zero, for example.
-    Closer to home, if we had chosen to recognize the unary minus
-    in Factor  instead of in Expression, we could treat constants
-    like -1 as ordinary constants,  rather  then  generating them
-    from  positive  ones.   None of these things are difficult to
-    deal with ... they only add extra tests in the code, which is
-    why  I  haven't  included them in our program.  The way I see
-    it, once we get to the point that we have a working compiler,
-    generating useful code  that  executes, we can always go back
-    and tweak the thing to tighten up the code produced.   That's
-    why there are Release 2.0's in the world.
+This approach calls for us to look for  special  cases BEFORE
+we Emit them.  As a trivial example,  we  should  be  able to
+identify a constant zero,  and  Emit a CLR instead of a load,
+or even do nothing at all, as in an add of zero, for example.
+Closer to home, if we had chosen to recognize the unary minus
+in Factor  instead of in Expression, we could treat constants
+like -1 as ordinary constants,  rather  then  generating them
+from  positive  ones.   None of these things are difficult to
+deal with ... they only add extra tests in the code, which is
+why  I  haven't  included them in our program.  The way I see
+it, once we get to the point that we have a working compiler,
+generating useful code  that  executes, we can always go back
+and tweak the thing to tighten up the code produced.   That's
+why there are Release 2.0's in the world.
 
 There IS one more type  of  optimization  worth  mentioning, that
 seems to promise pretty tight code without too much hassle.  It's
@@ -779,6 +760,7 @@ Next lesson, I'll show you how to deal with variables factors and
 function calls.  I'll also show you just how easy it is to handle
 multicharacter tokens and embedded white space.
 
+```
 *****************************************************************
 *                                                               *
 *                        COPYRIGHT NOTICE                       *
@@ -786,7 +768,4 @@ multicharacter tokens and embedded white space.
 *   Copyright (C) 1988 Jack W. Crenshaw. All rights reserved.   *
 *                                                               *
 *****************************************************************
- 
-
-
-
+```
