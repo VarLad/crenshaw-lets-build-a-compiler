@@ -44,7 +44,7 @@ to build a working system.
 This is a "learn-by-doing" series.  In the course of the series I
 will be performing  experiments  on  a  computer.    You  will be
 expected to follow along,  repeating  the  experiments that I do,
-and  performing  some  on your own.  I will be using Turbo Pascal
+and  performing  some  on your own.  I will be using [Turbo Pascal](https://en.wikipedia.org/wiki/Turbo_Pascal)
 4.0 on a PC  clone.   I will periodically insert examples written
 in TP.  These will be executable code, which you will be expected
 to copy into your own computer and run.  If you don't have a copy
