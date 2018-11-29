@@ -229,7 +229,7 @@ the wrong way, so we end up with the wrong  sign  for the result.
 So let's fix up procedure Subtract with a  sign-changer,  so that
 it reads
 
-```
+```pascal
 {-------------------------------------------------------------}
 { Recognize and Translate a Subtract }
 
