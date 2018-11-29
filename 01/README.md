@@ -105,7 +105,7 @@ of compiler techniques that don't need a lot of theory to handle.
 I  also  will  discuss only one approach  to  parsing:  top-down,
 recursive descent parsing, which is the  _ONLY_  technique that's
 at  all   amenable  to  hand-crafting  a  compiler.    The  other
-approaches are only useful if you have a tool like YACC, and also
+approaches are only useful if you have a tool like [YACC](https://en.wikipedia.org/wiki/Yacc), and also
 don't care how much memory space the final product uses.
                               
 I  also take a page from the work of Ron Cain, the author of  the
