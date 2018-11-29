@@ -109,7 +109,7 @@ approaches are only useful if you have a tool like YACC, and also
 don't care how much memory space the final product uses.
                               
 I  also take a page from the work of Ron Cain, the author of  the
-original Small C.  Whereas almost all other compiler authors have
+original [Small-C](https://en.wikipedia.org/wiki/Small-C).  Whereas almost all other compiler authors have
 historically  used  an  intermediate  language  like  P-code  and
 divided  the  compiler  into two parts (a front end that produces
 P-code,  and   a  back  end  that  processes  P-code  to  produce
@@ -171,7 +171,7 @@ is that we don't  fool  around with P-code or imaginary CPUs, but
 that we will start out on day one  producing  working, executable
 object code, at least in the form of  assembler  language source.
 However, you may not  like  my  choice  of assembler language ...
-it's 68000 code, which is what works on my system (under SK*DOS).
+it's [68000](https://en.wikipedia.org/wiki/Motorola_68000) code, which is what works on my system (under SK\*DOS).
 I  think  you'll  find, though, that the translation to any other
 CPU such as the 80x86 will  be  quite obvious, though, so I don't
 see  a problem here.  In fact, I hope someone out there who knows
