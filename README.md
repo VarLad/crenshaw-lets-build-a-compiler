@@ -1,6 +1,24 @@
-*NOTE: This is a fork of [lotabout/Let-s-build-a-compiler](https://github.com/lotabout/Let-s-build-a-compiler), reformatted as markdown for easier reading on github.com.*
+NOTE: This is a fork of [lotabout/Let-s-build-a-compiler](https://github.com/lotabout/Let-s-build-a-compiler), reformatted as markdown for easier reading on github.com.
 
-*lotabout's README.md follows:*
+TOC:
+- [Part 1: INTRODUCTION](https://github.com/pepaslabs/crenshaw-lets-build-a-compiler/blob/master/01/README.md)
+- [Part 2: EXPRESSION PARSING](https://github.com/pepaslabs/crenshaw-lets-build-a-compiler/blob/master/02/README.md)
+- Part 3: MORE EXPRESSIONS
+- Part 4: INTERPRETERS
+- Part 5: CONTROL CONSTRUCTS
+- Part 6: BOOLEAN EXPRESSIONS
+- Part 7: LEXICAL SCANNING
+- Part 8: A LITTLE PHILOSOPHY
+- Part 9: A TOP VIEW
+- Part 10: INTRODUCING "TINY"
+- Part 11: LEXICAL SCAN REVISITED
+- Part 12: MISCELLANY
+- Part 13: PROCEDURES
+- Part 14: TYPES
+- Part 15: BACK TO THE FUTURE
+- Part 16: UNIT CONSTRUCTION
+
+lotabout's README.md follows:
 
 ----
 
