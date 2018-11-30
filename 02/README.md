@@ -48,6 +48,7 @@ Before starting to code, make sure you have a  baseline  copy  of
 the  "cradle" that I gave last time.  We'll be using it again for
 other experiments.  Then add this code:
 
+Pascal:
 ```pascal
 {---------------------------------------------------------------}
 { Parse and Translate a Math Expression }
@@ -59,6 +60,7 @@ end;
 {---------------------------------------------------------------}
 ```
 
+C:
 ```c
 void Expression() {
     EmitLn('MOVE #' + GetNum + ',D0');
@@ -67,7 +69,8 @@ void Expression() {
 
 And add the  line  "Expression;"  to  the main program so that it
 reads:
-                              
+
+Pascal:
 ```pascal
 {---------------------------------------------------------------}
 begin
@@ -77,6 +80,7 @@ end.
 {---------------------------------------------------------------}
 ```
 
+C:
 ```c
 int main() {
     Init();
@@ -147,6 +151,7 @@ OK, basically what we want to  do  is have procedure Term do what
 Expression was doing before.  So just RENAME procedure Expression
 as Term, and enter the following new version of Expression:
 
+Pascal:
 ```pascal
 {---------------------------------------------------------------}
 { Parse and Translate an Expression }
@@ -164,6 +169,7 @@ end;
 {--------------------------------------------------------------}
 ```
 
+C:
 ```c
 void Expression() {
     Term();
@@ -183,6 +189,7 @@ void Expression() {
 
 Next, just above Expression enter these two procedures:
 
+Pascal:
 ```pascal
 {--------------------------------------------------------------}
 { Recognize and Translate an Add }
@@ -195,6 +202,7 @@ begin
 end;
 ```
 
+C:
 ```c
 void Add() {
     Match('+');
@@ -203,6 +211,7 @@ void Add() {
 }
 ```
 
+Pascal:
 ```pascal
 {-------------------------------------------------------------}
 { Recognize and Translate a Subtract }
@@ -216,6 +225,7 @@ end;
 {-------------------------------------------------------------}
 ```      
 
+C:
 ```c
 void Substract() {
     Match('-');
