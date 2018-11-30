@@ -18,6 +18,16 @@ TOC:
 - Part 15: BACK TO THE FUTURE
 - Part 16: UNIT CONSTRUCTION
 
+Resources:
+- The original: http://compilers.iecc.com/crenshaw/
+  - as PDF: https://compilers.iecc.com/crenshaw/tutorfinal.pdf
+- as HTML: http://www.penguin.cz/~radek/book/lets-build-a-compiler/
+- as PDF: http://www.penguin.cz/~radek/book/lets_build_a_compiler.pdf
+- HN discussions:
+  - https://news.ycombinator.com/item?id=6641117
+  - https://news.ycombinator.com/item?id=1727004
+  - https://news.ycombinator.com/item?id=232024
+
 lotabout's README.md follows:
 
 ----
