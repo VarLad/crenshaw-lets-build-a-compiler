@@ -339,29 +339,54 @@ end.
 #ifndef _CRADLE_H
 #define _CRADLE_H
 
+
 #define UPCASE(C) (~(1<<5) & (C))
+
+// Constant Declarations
 #define MAX_BUF 100
 
+// Variable Declarations
 static char tmp[MAX_BUF];
-
 char Look;
 
+// Read New Character From Input Stream
 void GetChar();
 
+// Report an Error
 void Error(char *s);
+
+// Report Error and Halt
 void Abort(char *s);
+
+// Report What Was Expected
 void Expected(char *s);
+
+// Match a Specific Input Character
 void Match(char x);
 
+
+// Recognize an Alpha Character
 int IsAlpha(char c);
+
+// Recognize a Digit
 int IsDigit(char c);
 
+
+// Get an Identifier
 char GetName();
+
+// Get a Number
 char GetNum();
 
+
+// Output a String with Tab
 void Emit(char *s);
+
+// Output a String with Tab and CRLF
 void EmitLn(char *s);
 
+
+// Initialize
 void Init();
 
 #endif
@@ -374,24 +399,30 @@ void Init();
 #include <stdio.h>
 #include <stdlib.h>
 
+
+// Read New Character From Input Stream
 void GetChar() {
     Look = getchar();
 }
 
+// Report an Error
 void Error(char *s) {
     printf("\nError: %s.", s);
 }
 
+// Report Error and Halt
 void Abort(char *s) {
     Error(s);
     exit(1);
 }
 
+// Report What Was Expected
 void Expected(char *s) {
     sprintf(tmp, "%s Expected", s);
     Abort(tmp);
 }
 
+// Match a Specific Input Character
 void Match(char x) {
     if(Look == x) {
         GetChar();
@@ -401,14 +432,17 @@ void Match(char x) {
     }
 }
 
+// Recognize an Alpha Character
 int IsAlpha(char c) {
     return (UPCASE(c) >= 'A') && (UPCASE(c) <= 'Z');
 } 
 
+// Recognize a Digit
 int IsDigit(char c) {
     return (c >= '0') && (c <= '9');
 }
 
+// Get an Identifier
 char GetName() {
     char c = Look;
 
@@ -422,6 +456,7 @@ char GetName() {
     return UPCASE(c);
 }
 
+// Get a Number
 char GetNum() {
     char c = Look;
 
@@ -435,15 +470,18 @@ char GetNum() {
     return c;
 }
 
+// Output a String with Tab
 void Emit(char *s) {
     printf("\t%s", s);
 }
 
+// Output a String with Tab and CRLF
 void EmitLn(char *s) {
     Emit(s);
     printf("\n");
 }
 
+// Initialize
 void Init() {
     GetChar();
 }
@@ -453,6 +491,8 @@ void Init() {
 
 ```c
 #include "cradle.h"
+
+// Main Program
 int main() {
     Init();
     return 0;
