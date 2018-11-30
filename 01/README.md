@@ -462,7 +462,8 @@ int main() {
 That's it for this introduction.  ~Copy the code above into TP and
 compile it.~  Build the above code with `gcc cradle.c main.c`.
 Make sure that it compiles and runs  correctly. Then
-proceed to the first lesson, which is on expression parsing.
+proceed to the [first lesson](https://github.com/pepaslabs/crenshaw-lets-build-a-compiler/blob/master/02/README.md), 
+which is on expression parsing.
 
 ```
 *****************************************************************
