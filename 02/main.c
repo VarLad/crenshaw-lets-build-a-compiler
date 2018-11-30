@@ -10,9 +10,7 @@ void Add();
 void Substract();
 void Factor();
 
-
-void Multiply()
-{
+void Multiply() {
     Match('*');
     Factor();
     EmitLn("imull (%esp), %eax");
@@ -20,8 +18,7 @@ void Multiply()
     EmitLn("addl $4, %esp");
 } 
 
-void Divide()
-{
+void Divide() {
     Match('/');
     Factor();
 
@@ -39,40 +36,30 @@ void Divide()
     EmitLn("sarl $31, %edx");
     EmitLn("idivl (%esp)");
     EmitLn("addl $4, %esp");
-
 }
 
-void Factor()
-{
-
+void Factor() {
     if(Look == '(') {
-
         Match('(');
         Expression();
         Match(')');
      } else if(IsAddop(Look)) {
-
         Match('-');
         sprintf(tmp,"movl $%c, %%eax", GetNum());
         EmitLn(tmp);
         EmitLn("negl %eax");
-
     } else {
-
         sprintf(tmp,"movl $%c, %%eax", GetNum());
         EmitLn(tmp);
     }
 }
 
-void Term()
-{
+void Term() {
     Factor();
     while (strchr("*/", Look)) {
-
         EmitLn("pushl %eax");
 
-        switch(Look)
-        {
+        switch(Look) {
             case '*':
                 Multiply();
                 break;
@@ -85,19 +72,17 @@ void Term()
     }
 }
 
-void Expression()
-{
-    if(IsAddop(Look))
+void Expression() {
+    if(IsAddop(Look)) {
         EmitLn("xor %eax, %eax");
-    else
+    } else {
         Term();
+    }
 
     while (strchr("+-", Look)) {
-
         EmitLn("pushl %eax");
 
-        switch(Look)
-        {
+        switch(Look) {
             case '+':
                 Add();
                 break;
@@ -110,19 +95,15 @@ void Expression()
     }
 }
 
-
-void Add()
-{
+void Add() {
     Match('+');
     Term();
     EmitLn("addl (%esp), %eax");
-    EmitLn("addl $4, %esp");
-    
+    EmitLn("addl $4, %esp");    
 }
 
 
-void Substract()
-{
+void Substract() {
     Match('-');
     Term();
     EmitLn("subl (%esp), %eax");
@@ -130,10 +111,7 @@ void Substract()
     EmitLn("addl $4, %esp");
 }
 
-
-int main()
-{
-
+int main() {
     Init();
     EmitLn(".text");
     EmitLn(".global _start");
