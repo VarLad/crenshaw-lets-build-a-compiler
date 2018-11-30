@@ -99,7 +99,7 @@ file, and the writes to another  disk  file, but this way is much
 easier to deal with while we're experimenting.
 
 Also note that an expression must leave a result somewhere.  I've
-chosen the  68000  register  DO.    I  could have made some other
+chosen the  68000  register  D0.    I  could have made some other
 choices, but this one makes sense.
 
 
@@ -120,13 +120,13 @@ or, in general,
 
 `<term> +/- <term>`
 
-(That's a bit of Backus-Naur Form, or BNF.)
+(That's a bit of [Backus-Naur Form](https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form), or BNF.)
                               
 To do this we need a procedure that recognizes a term  and leaves
 its   result   somewhere,  and  another   that   recognizes   and
 distinguishes  between   a  '+'  and  a  '-'  and  generates  the
 appropriate code.  But if Expression is going to leave its result
-in DO, where should Term leave its result?    Answer:    the same
+in D0, where should Term leave its result?    Answer:    the same
 place.  We're  going  to  have  to  save the first result of Term
 somewhere before we get the next one.
 
@@ -212,10 +212,10 @@ lifetimes to the issue of code optimization, and there are indeed
 things that can be done to improve the quality  of  code  output.
 Some compilers do quite well, but  there  is a heavy price to pay
 in complexity, and it's  a  losing  battle  anyway ... there will
-probably never come a time when  a  good  assembler-language pro-
-grammer can't out-program a compiler.    Before  this  session is
-over, I'll briefly mention some ways that we can do a  little op-
-timization,  just  to  show you that we can indeed improve things
+probably never come a time when  a  good  assembler-language programmer
+can't out-program a compiler.    Before  this  session is
+over, I'll briefly mention some ways that we can do a  little optimization,
+just  to  show you that we can indeed improve things
 without too much trouble.  But remember, we're here to learn, not
 to see how tight we can make  the  object  code.    For  now, and
 really throughout  this  series  of  articles,  we'll  studiously
