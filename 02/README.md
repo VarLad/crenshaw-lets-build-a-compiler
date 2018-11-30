@@ -59,6 +59,12 @@ end;
 {---------------------------------------------------------------}
 ```
 
+```c
+void Expression() {
+    EmitLn('MOVE #' + GetNum + ',D0');
+}
+```
+
 And add the  line  "Expression;"  to  the main program so that it
 reads:
                               
@@ -69,6 +75,13 @@ begin
    Expression;
 end.
 {---------------------------------------------------------------}
+```
+
+```c
+int main() {
+    Init();
+    Expression();
+}
 ```
 
 Now  run  the  program. Try any single-digit number as input. You
@@ -151,6 +164,23 @@ end;
 {--------------------------------------------------------------}
 ```
 
+```c
+void Expression() {
+    Term();
+    EmitLn("mov FIXME");
+    switch(Look) {
+    case '+':
+        Add();
+        break;
+    case '-':
+        Substract();
+        break;
+    default:
+        Expected("Addop");
+    }
+}
+```
+
 Next, just above Expression enter these two procedures:
 
 ```pascal
@@ -165,6 +195,14 @@ begin
 end;
 ```
 
+```c
+void Add() {
+    Match('+');
+    Term();
+    EmitLn("addl (%esp), %eax");
+}
+```
+
 ```pascal
 {-------------------------------------------------------------}
 { Recognize and Translate a Subtract }
@@ -177,6 +215,14 @@ begin
 end;
 {-------------------------------------------------------------}
 ```      
+
+```c
+void Substract() {
+    Match('-');
+    Term();
+    EmitLn("subl (%esp), %eax");
+}
+```
 
 When you're finished with that,  the order of the routines should
 be:
