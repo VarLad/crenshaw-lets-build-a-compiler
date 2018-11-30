@@ -449,8 +449,19 @@ void Init() {
 }
 ```
 
-That's it for this introduction.  Copy the code above into TP and
-compile it.  Make sure that it compiles and runs  correctly. Then
+`main.c`:
+
+```c
+#include "cradle.h"
+int main() {
+    Init();
+    return 0;
+}
+```
+
+That's it for this introduction.  ~Copy the code above into TP and
+compile it.~  Build the above code with `gcc cradle.c main.c`.
+Make sure that it compiles and runs  correctly. Then
 proceed to the first lesson, which is on expression parsing.
 
 ```
